@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth.dart';
 import '../screens/user_products_screen.dart';
 import '../screens/orrders_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   ListTile _buildListTile({IconData icon, String text, Function onTap}) {
     return ListTile(
-      leading: Icon(Icons.shop),
+      leading: Icon(icon),
       title: Text(text),
       onTap: onTap,
     );
@@ -39,12 +41,22 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(),
           _buildListTile(
-              icon: Icons.edit,
-              text: 'Manage Products',
-              onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(UsersProductsScreen.routeName);
-              }),
+            icon: Icons.edit,
+            text: 'Manage Products',
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(UsersProductsScreen.routeName);
+            },
+          ),
+          Divider(),
+          _buildListTile(
+            icon: Icons.exit_to_app,
+            text: 'LogOut',
+            onTap: () {
+              Navigator.of(context).pop();
+              Provider.of<Auth>(context, listen: false).logOut();
+            },
+          ),
         ],
       ),
     );
